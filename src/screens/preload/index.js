@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import styled from "styled-components/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
+
 export default ({ navigation }) => {
   const getData = async () => {
     try {
@@ -20,24 +21,16 @@ export default ({ navigation }) => {
   }, []);
 
   return (
-    <Container>
-      <Title>Burguer</Title>
-      <SubTitle>Lau</SubTitle>
-    </Container>
+    <View style={styles.view_container}>
+      <ActivityIndicator color={"#93d7af"} size="large" />
+    </View>
   );
 };
 
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-`;
-const Title = styled.Text`
-  font-size: 30px;
-  font-weight: 700;
-`;
-const SubTitle = styled.Text`
-  font-size: 26px;
-  color: orange;
-`;
+const styles = StyleSheet.create({
+  view_container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

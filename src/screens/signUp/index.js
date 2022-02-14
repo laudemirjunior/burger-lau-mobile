@@ -3,7 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Button from "../../components/Button";
 import api from "../../services";
-import styled from "styled-components/native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export default ({ navigation }) => {
   const [name, setName] = useState("");
@@ -23,110 +23,114 @@ export default ({ navigation }) => {
   };
 
   return (
-    <Container>
-      <ContainerInfo>
-        <ContainerLogo>
+    <View style={styles.view_container}>
+      <View>
+        <View style={styles.view_containerLogo}>
           <Logo />
-        </ContainerLogo>
-        <ContainerCard>
-          <ContainerIcon>
+        </View>
+        <View style={styles.view_containerCard}>
+          <View style={styles.view_containerIcon}>
             <MaterialCommunityIcons
               name="cart-outline"
               size={30}
               color="#27AE60"
             />
-          </ContainerIcon>
-          <ContainerText>
+          </View>
+          <Text style={styles.text_phase}>
             A vida é como um sanduíche, é preciso recheá-la com os melhores
             ingredientes.
-          </ContainerText>
-        </ContainerCard>
-      </ContainerInfo>
-      <ContainerInput>
-        <ContainerTextInput>
-          <TextInput>Logar</TextInput>
-        </ContainerTextInput>
-        <Input value={name} onChangeText={setName} placeholder="Nome" />
-        <Input value={email} onChangeText={setEmail} placeholder="Email" />
-        <Input
+          </Text>
+        </View>
+      </View>
+      <View style={styles.view_containerInput}>
+        <View style={styles.view_containerTextInput}>
+          <Text style={styles.text_input}>Cadastrar</Text>
+        </View>
+        <TextInput
+          style={styles.textInput_input}
+          value={name}
+          onChangeText={setName}
+          placeholder="Nome"
+        />
+
+        <TextInput
+          style={styles.textInput_input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+        />
+        <TextInput
+          style={styles.textInput_input}
           value={password}
           onChangeText={setPassword}
           secureTextEntry={true}
           placeholder="Senha"
         />
         <Button onPress={() => singUp()}>Cadastrar</Button>
-        <SubTitleInput>
+        <Text style={styles.text_subTitleInput}>
           Crie sua conta para saborear muitas delícias e matar sua fome!
-        </SubTitleInput>
+        </Text>
         <Button color={false} onPress={() => navigation.navigate("LogIn")}>
           Logar
         </Button>
-      </ContainerInput>
-    </Container>
+      </View>
+    </View>
   );
 };
 
-const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  margin-top: 70px;
-`;
-
-const ContainerInfo = styled.View``;
-
-const ContainerLogo = styled.View`
-  width: 300px;
-  margin-bottom: 20px;
-`;
-
-const ContainerCard = styled.View`
-  width: 300px;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ContainerIcon = styled.View`
-  background-color: #93d7af;
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-`;
-
-const ContainerText = styled.Text`
-  width: 250px;
-  color: #828282;
-  font-size: 12px;
-`;
-
-const ContainerInput = styled.View`
-  align-items: center;
-`;
-
-const ContainerTextInput = styled.View`
-  width: 300px;
-`;
-
-const TextInput = styled.Text`
-  font-weight: bold;
-  color: #828282;
-`;
-
-const Input = styled.TextInput`
-  width: 300px;
-  height: 40px;
-  margin: 5px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  padding-left: 20px;
-`;
-
-const SubTitleInput = styled.Text`
-  width: 300px;
-  color: #828282;
-  font-size: 12px;
-`;
+const styles = StyleSheet.create({
+  view_container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 125,
+  },
+  view_containerLogo: {
+    width: 300,
+    marginBottom: 20,
+  },
+  view_containerCard: {
+    width: 300,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  view_containerIcon: {
+    backgroundColor: "#93d7af",
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  text_phase: {
+    width: 250,
+    color: "#828282",
+    fontSize: 12,
+  },
+  view_containerInput: {
+    alignItems: "center",
+    width: 300,
+  },
+  view_containerTextInput: {
+    width: 300,
+  },
+  text_input: {
+    fontWeight: "bold",
+    color: "#828282",
+  },
+  textInput_input: {
+    width: 300,
+    height: 40,
+    margin: 5,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 10,
+    paddingLeft: 20,
+  },
+  text_subTitleInput: {
+    width: 300,
+    color: "#828282",
+    fontSize: 12,
+  },
+});

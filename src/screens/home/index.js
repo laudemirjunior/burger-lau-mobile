@@ -1,4 +1,4 @@
-import { Text, View, Image, ScrollView } from "react-native";
+import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
 import Button from "../../components/Button";
 import { useProduct } from "../../context/productContext";
 
@@ -7,64 +7,23 @@ export default () => {
 
   return (
     <ScrollView>
-      <Text
-        style={{
-          marginTop: 30,
-          marginBottom: 10,
-          textAlign: "center",
-          fontSize: 24,
-        }}
-      >
-        Todos os produtos
-      </Text>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Text style={styles.text}>Todos os produtos</Text>
+      <View style={styles.view_container}>
         {products.map((item, index) => {
           return (
-            <View
-              key={index}
-              style={{
-                backgroundColor: "#fff",
-                margin: 5,
-                borderRadius: 10,
-                width: "30%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View key={index} style={styles.view_card}>
               <View key={index}>
                 <Image
                   source={{ uri: item.image }}
                   alt=""
-                  style={{ width: 60, height: 60 }}
+                  style={styles.image}
                 />
               </View>
-              <View
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ textAlign: "center", margin: 5 }}>
-                  {item.title}
-                </Text>
+              <View style={styles.view_texts}>
+                <Text style={styles.text_title}>{item.title}</Text>
                 <Text>R$ {item.price},00</Text>
                 <View>
-                  <Button
-                    style={{ width: 90, marginBottom: 10, marginTop: 10 }}
-                    onPress={() => buy(item)}
-                  >
-                    Adicionar
-                  </Button>
+                  <Button onPress={() => buy(item)}>Adicionar</Button>
                 </View>
               </View>
             </View>
@@ -74,3 +33,41 @@ export default () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    marginTop: 30,
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 24,
+  },
+  view_container: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  view_card: {
+    backgroundColor: "#fff",
+    margin: 5,
+    borderRadius: 10,
+    width: "30%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 60,
+    height: 60,
+  },
+  view_texts: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text_title: {
+    textAlign: "center",
+    margin: 5,
+  },
+});

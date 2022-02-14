@@ -28,10 +28,11 @@ export const ProductProvider = ({ children }) => {
 
   const filter = (data) => {
     return setItems(
-      products.filter(
-        (item) =>
-          item.title.toLowerCase().replace(/[\W+]/g, "") ===
-          data.toLowerCase().replace(/[\W+]/g, "")
+      products.filter((item) =>
+        item.title
+          .toLowerCase()
+          .replace(/[\W+]/g, "")
+          .includes(data.toLowerCase().replace(/[\W+]/g, ""))
       )
     );
   };

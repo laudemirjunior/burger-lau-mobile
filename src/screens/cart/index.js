@@ -5,6 +5,8 @@ import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 export default () => {
   const [cart, setCart] = useState([]);
@@ -38,59 +40,88 @@ export default () => {
     getCart();
   };
 
+  const renderRightActions = (progress, dragX) => {
+    const scale = dragX.interpolate({
+      inputRange: [-50, 0.5],
+      outputRange: [1, 0.1],
+    });
+    const Style = {
+      transform: [
+        {
+          scale,
+        },
+      ],
+    };
+
+    return (
+      <View style={styles.view_buttons}>
+        <Button style={([Style], styles.view_button)}>
+          <FontAwesome name="trash" size={18} color="white" />
+        </Button>
+      </View>
+    );
+  };
+
   return (
     <>
       <ScrollView>
         <View>
           <Text style={styles.text}>Meus produtos</Text>
         </View>
-        <View style={styles.view}>
+
+        <GestureHandlerRootView style={styles.view}>
           {cart.length !== 0 ? (
             cart.map((item, index) => {
               return (
                 <View key={index} style={styles.view_container}>
-                  <View key={index} style={styles.view_image}>
-                    <Image
-                      source={{ uri: item.image }}
-                      alt={item.title}
-                      style={styles.image}
-                    />
-                  </View>
-                  <View style={styles.view_card}>
-                    <Text style={styles.text_title}>{item.title}</Text>
-                    <Text style={styles.text_subTitle}>
-                      Unitário: R$ {item.price},00
-                    </Text>
-                    <Text style={styles.text_subTitle}>
-                      Total: R$ {item.price * item.amount},00
-                    </Text>
-                  </View>
-                  <View style={styles.view_buttons}>
-                    <Button
-                      onPress={() => addDecrease(item, index, "decrement")}
-                    >
-                      <FontAwesome name="minus" size={18} color="white" />
-                    </Button>
-                    <Text style={styles.text_amount}>{item.amount}</Text>
-                    <Button onPress={() => addDecrease(item, index, "add")}>
-                      <FontAwesome name="plus" size={18} color="white" />
-                    </Button>
-                    <Button onPress={() => remove(index)}>
-                      <FontAwesome name="trash" size={18} color="white" />
-                    </Button>
-                  </View>
+                  <Swipeable
+                    renderRightActions={renderRightActions}
+                    onSwipeableRightOpen={() => remove(index)}
+                  >
+                    <View key={index} style={styles.view_container}>
+                      <View key={index} style={styles.view_image}>
+                        <Image
+                          source={{ uri: item.image }}
+                          alt={item.title}
+                          style={styles.image}
+                        />
+                      </View>
+                      <View style={styles.view_card}>
+                        <Text style={styles.text_title}>{item.title}</Text>
+                        <Text style={styles.text_subTitle}>
+                          Unitário: R$ {item.price},00
+                        </Text>
+                        <Text style={styles.text_subTitle}>
+                          Total: R$ {item.price * item.amount},00
+                        </Text>
+                      </View>
+                      <View style={styles.view_buttons}>
+                        <View style={styles.view_button}>
+                          <Button
+                            onPress={() =>
+                              addDecrease(item, index, "decrement")
+                            }
+                          >
+                            <FontAwesome name="minus" size={18} color="white" />
+                          </Button>
+                        </View>
+
+                        <Text style={styles.text_amount}>{item.amount}</Text>
+                        <View style={styles.view_button}>
+                          <Button
+                            onPress={() => addDecrease(item, index, "add")}
+                          >
+                            <FontAwesome name="plus" size={18} color="white" />
+                          </Button>
+                        </View>
+                      </View>
+                    </View>
+                  </Swipeable>
                 </View>
               );
             })
           ) : (
-            <View
-              style={{
-                width: "100%",
-                height: 500,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.view_animate}>
               <LottieView
                 source={require("../../assets/cart.json")}
                 autoPlay
@@ -99,7 +130,7 @@ export default () => {
               />
             </View>
           )}
-        </View>
+        </GestureHandlerRootView>
       </ScrollView>
       {cart.length !== 0 && (
         <View style={styles.view_cardPayment}>
@@ -162,14 +193,22 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   view_buttons: {
+    width: 100,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  view_button: {
     justifyContent: "flex-end",
     alignItems: "flex-end",
     flexDirection: "row",
+    width: 35,
   },
   text_amount: {
     width: 20,
-    marginBottom: 15,
+    marginRight: 10,
     textAlign: "center",
+    justifyContent: "center",
   },
   view_cardPayment: {
     justifyContent: "center",
@@ -190,5 +229,11 @@ const styles = StyleSheet.create({
     borderColor: "green",
     borderStyle: "solid",
     borderWidth: 1,
+  },
+  view_animate: {
+    width: "100%",
+    height: 500,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
