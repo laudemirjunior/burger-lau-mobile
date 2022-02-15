@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 125,
+    marginBottom: 45,
   },
   view_containerLogo: {
     width: 300,

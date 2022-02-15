@@ -14,9 +14,7 @@ export default ({ navigation }) => {
 
   return (
     <View style={styles.view_container}>
-      <View style={styles.view_button}>
-        <Button onPress={removeValue}>Sair</Button>
-      </View>
+      <Button onPress={removeValue}>Sair</Button>
     </View>
   );
 };
@@ -24,10 +22,8 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   view_container: {
     flex: 1,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
-  },
-  view_button: {
-    width: "90%",
   },
 });

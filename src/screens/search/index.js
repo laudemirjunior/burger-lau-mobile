@@ -67,9 +67,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   textInput_input: {
-    width: 300,
+    width: "60%",
     height: 40,
-    margin: 5,
     backgroundColor: "#e0e0e0",
     borderRadius: 10,
     paddingLeft: 20,
@@ -80,13 +79,20 @@ const styles = StyleSheet.create({
   },
   view_card: {
     backgroundColor: "#fff",
-    margin: 5,
+    margin: 10,
     borderRadius: 10,
-    width: "90%",
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   view_image: {
     flex: 1,

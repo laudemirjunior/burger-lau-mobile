@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   view_container: {
-    display: "flex",
+    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -56,6 +56,14 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   image: {
     width: 60,

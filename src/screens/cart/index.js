@@ -1,4 +1,11 @@
-import { Image, Text, View, ScrollView, StyleSheet } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../../components/Button";
 import { useCallback, useState } from "react";
@@ -40,25 +47,11 @@ export default () => {
     getCart();
   };
 
-  const renderRightActions = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [-50, 0.5],
-      outputRange: [1, 0.1],
-    });
-    const Style = {
-      transform: [
-        {
-          scale,
-        },
-      ],
-    };
-
+  const renderRightActions = () => {
     return (
-      <View style={styles.view_buttons}>
-        <Button style={([Style], styles.view_button)}>
-          <FontAwesome name="trash" size={18} color="white" />
-        </Button>
-      </View>
+      <TouchableOpacity style={styles.touchableOpacityRed}>
+        <FontAwesome name="trash" size={18} color="white" />
+      </TouchableOpacity>
     );
   };
 
@@ -78,7 +71,7 @@ export default () => {
                     renderRightActions={renderRightActions}
                     onSwipeableRightOpen={() => remove(index)}
                   >
-                    <View key={index} style={styles.view_container}>
+                    <View key={index} style={styles.view_containerInter}>
                       <View key={index} style={styles.view_image}>
                         <Image
                           source={{ uri: item.image }}
@@ -96,24 +89,19 @@ export default () => {
                         </Text>
                       </View>
                       <View style={styles.view_buttons}>
-                        <View style={styles.view_button}>
-                          <Button
-                            onPress={() =>
-                              addDecrease(item, index, "decrement")
-                            }
-                          >
-                            <FontAwesome name="minus" size={18} color="white" />
-                          </Button>
-                        </View>
-
+                        <TouchableOpacity
+                          style={styles.touchableOpacity}
+                          onPress={() => addDecrease(item, index, "decrement")}
+                        >
+                          <FontAwesome name="minus" size={18} color="white" />
+                        </TouchableOpacity>
                         <Text style={styles.text_amount}>{item.amount}</Text>
-                        <View style={styles.view_button}>
-                          <Button
-                            onPress={() => addDecrease(item, index, "add")}
-                          >
-                            <FontAwesome name="plus" size={18} color="white" />
-                          </Button>
-                        </View>
+                        <TouchableOpacity
+                          style={styles.touchableOpacity}
+                          onPress={() => addDecrease(item, index, "add")}
+                        >
+                          <FontAwesome name="plus" size={18} color="white" />
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </Swipeable>
@@ -167,7 +155,19 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 10,
     width: "90%",
-    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  view_containerInter: {
+    width: "93%",
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
@@ -181,10 +181,16 @@ const styles = StyleSheet.create({
     height: 80,
   },
   view_card: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
     marginRight: 20,
     flex: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   text_title: {
     marginBottom: 5,
@@ -193,20 +199,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   view_buttons: {
-    width: 100,
     flexDirection: "row",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  view_button: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    flexDirection: "row",
-    width: 35,
-  },
   text_amount: {
     width: 20,
-    marginRight: 10,
     textAlign: "center",
     justifyContent: "center",
   },
@@ -235,5 +234,20 @@ const styles = StyleSheet.create({
     height: 500,
     justifyContent: "center",
     alignItems: "center",
+  },
+  touchableOpacity: {
+    backgroundColor: "#27ae60",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    padding: 10,
+  },
+  touchableOpacityRed: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    width: 40,
+    marginRight: 26,
   },
 });
