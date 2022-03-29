@@ -19,7 +19,7 @@ export default () => {
   const [cart, setCart] = useState([]);
 
   const getCart = async () => {
-    setCart(JSON.parse((await AsyncStorage.getItem("cart")) || []));
+    setCart(JSON.parse(await AsyncStorage.getItem("cart")) || []);
   };
 
   useFocusEffect(

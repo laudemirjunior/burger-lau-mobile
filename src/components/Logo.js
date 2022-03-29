@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default () => (
   <View style={styles.view}>
     <Text style={styles.text_Title}>Burguer</Text>
-    <Text style={styles.text_SubTitle}>Lau</Text>
+    <Text style={styles.text_SubTitle}>iaz</Text>
   </View>
 );
 
